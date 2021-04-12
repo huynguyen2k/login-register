@@ -1,13 +1,14 @@
 const registerForm = document.getElementById('register');
 const submitRegisterForm = document.querySelector('.register__btn');
 const registerBtn = document.querySelector('.login__register-btn');
-const modal = document.querySelector('.modal');
+const registerModal = document.getElementById('register-modal');
 const closeModal = document.querySelector('.modal .close-btn');
-const notifyModalBtn = document.querySelector('.notify-modal .button');
+const notifyModal = document.getElementById('notify-modal');
+const notifyModalBtn = document.querySelector('#notify-modal .button');
 
 function toggleModal(event) {
     event.preventDefault();
-    modal.classList.toggle('modal--active');
+    registerModal.classList.toggle('modal--active');
 }
 
 function validateString(data, pattern) {
@@ -53,9 +54,12 @@ function createElement(tagName, className, content) {
 
 registerBtn.addEventListener('click', toggleModal);
 closeModal.addEventListener('click', toggleModal);
-notifyModalBtn.addEventListener('click', function() {
-    modal.classList.toggle('modal--active');
-});
+
+if (notifyModalBtn != null) {
+    notifyModalBtn.addEventListener('click', function() {
+        notifyModal.remove();
+    });
+}
 
 submitRegisterForm.addEventListener('click', function(event) {
     event.preventDefault();

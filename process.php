@@ -17,8 +17,10 @@
         $stmt = $con->prepare($query);
         $stmt->bind_param("iss", $id, $_POST['username'], $_POST['password']);
 
-        if ($stmt->execute() == false) {
-            $_SESSION["error"]["register"] = "Username already exists please enter an other username!";
+        if ($stmt->execute()) {
+            $_SESSION["notify"]["success"] = "You have successfully signed up";
+        } else {
+            $_SESSION["notify"]["error"] = "Username already exists please enter an other username!";
         }
 
         $stmt->close();
@@ -31,10 +33,12 @@
         $stmt->execute();
         $result = $stmt->get_result();
 
+        
         if ($result->num_rows > 0) {
+            $_SESSION["username"] = $result->fetch_assoc()["username"];
             $loginSuccess = true;
         } else {
-            $_SESSION["error"]["login"] = "Your username or password is not valid please enter again!";
+            $_SESSION["notify"]["error"] = "Your username or password is not valid please enter again!";
         }
 
         $stmt->close();
